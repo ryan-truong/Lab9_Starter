@@ -86,7 +86,13 @@
       <button>Trigger a Global Error</button>
     </section>
   </main>
-
+  <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+  <script>
+    window.TrackJS && TrackJS.install({ 
+      token: "d5d1b6071a3e49cd8c1ff6816a68e309"
+      // for more configuration options, see https://docs.trackjs.com
+    });
+  </script>
   <script>
     let form = document.querySelector('form');
     form.addEventListener('submit', e => {
@@ -102,6 +108,115 @@
 
     // Start your code here
     // You may move this JS to another file if you wish
+    const consolelogButton = errorBtns[0];
+    consolelogButton.addEventListener('click', () => {
+      console.log("clicked console log button");
+    });
+
+    const consoleerrorButton = errorBtns[1];
+    consoleerrorButton.addEventListener('click', () => {
+      console.error("error button clicked");
+    });
+
+    const consolecountButton = errorBtns[2];
+    consolecountButton.addEventListener('click', () => {
+      console.count();
+    });
+
+    const consolewarnButton = errorBtns[3];
+    consolewarnButton.addEventListener('click', () => {
+      console.warn("warning button clicked");
+    });
+
+    const consoleassertButton = errorBtns[4];
+    consoleassertButton.addEventListener('click', () => {
+      console.assert(false, "assertion button clicked");
+    });
+
+    const consoleclearButton = errorBtns[5];
+    consoleclearButton.addEventListener('click', () => {
+      console.clear();
+    });
+
+    const consoledirButton = errorBtns[6];
+    consoledirButton.addEventListener('click', () => {
+      console.dir();
+    });
+
+    const consoledirxmlButton = errorBtns[7];
+    consoledirxmlButton.addEventListener('click', () => {
+      console.dirxml();
+    });
+
+    const consolestartgroupButton = errorBtns[8];
+    consolestartgroupButton.addEventListener('click', () => {
+      console.group(["test","message"]);
+    });
+
+    const consoleendgroupButton = errorBtns[9];
+    consoleendgroupButton.addEventListener('click', () => {
+      console.groupEnd();
+    });
+
+    const consoletableButton = errorBtns[10];
+    consoletableButton.addEventListener('click', () => {
+      console.table(["test","message"]);
+    });
+
+    const consoletimerstartButton = errorBtns[11];
+    consoletimerstartButton.addEventListener('click', () => {
+      console.time("test");
+    });
+
+    const consoletimerendButton = errorBtns[12];
+    consoletimerendButton.addEventListener('click', () => {
+      console.timeEnd("test");
+    });
+
+    const consoletraceButton = errorBtns[13];
+    consoletraceButton.addEventListener('click', () => {
+      console.trace();
+    });
+
+    const consoleglobalerrorButton = errorBtns[14];
+    consoleglobalerrorButton.addEventListener('click', () => {
+      test.substring(1);
+    });
+
+
+    function negativeCheck(input){
+      if(input > 0){
+        return input;
+      }
+      else{
+        throw new Error("Input must not be negative");
+      }
+    }
+
+    try{
+      negativeCheck(-1);
+    } catch (err){
+      console.log(err);
+    } finally{
+      console.log("got to finally block");
+    }
+
+    let object = {name: "test", age: 5};
+    function readObject(object){
+      if(!object.name){
+        throw new ValidationError("No name field");
+      }
+      if(!object.age){
+        throw new ValidationError("No age field");
+      }
+      return object;
+    }
+
+    window.onerror = function(msg, url, lineNo, columnNo, error){
+      console.log(msg);
+      TrackJS.track(msg);
+    }
+
   </script>
 </body>
 
